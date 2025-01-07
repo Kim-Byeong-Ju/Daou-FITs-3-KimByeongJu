@@ -1,3 +1,5 @@
+# 실습과제 16번
+
 class DNode:
     def __init__(self, data):
         self.data = data  # 노드의 데이터
@@ -43,7 +45,7 @@ class DoublyLinkedList:
                 temp = None
                 return
             temp = temp.next
-
+    # 실습과제 17번
     def display(self):
         temp = self.head
         while temp:

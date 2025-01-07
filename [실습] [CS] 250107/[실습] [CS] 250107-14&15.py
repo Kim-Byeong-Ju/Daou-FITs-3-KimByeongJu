@@ -41,6 +41,7 @@ class SinglyLinkedList:
 
         prev.next = temp.next  # 이전 노드가 현재 노드의 다음 노드를 가리키게 함
         temp = None
+    # 실습과제 15번
     def display(self):
         temp = self.head
         while temp:
