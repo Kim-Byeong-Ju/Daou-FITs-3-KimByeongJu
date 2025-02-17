@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>도서검색 프로그램</h1>
+    <form action="http://localhost:8080/searchbook/myServlet" method="post">
+
+    도서명 키워드: <input name="keyword" type="text"> </br></br></br>
+        <input type="radio" name="price" id="option1" value="10000">
+        <label for="option1">10,000원 미만</label></br>
+
+        <input type="radio" name="price" id="option2" value="20000">
+        <label for="option2">20,000원 미만</label></br>
+
+        <input type="radio" name="price" id="option3" value="30000">
+        <label for="option3">30,000원 미만</label></br>
+
+        <input type="radio" name="price" id="option4" value="40000">
+        <label for="option4">40,000원 미만</label></br></br>
+
+        <input type="submit" value="도서 검색!">
+    </form>
+
+</body>
+</html>
