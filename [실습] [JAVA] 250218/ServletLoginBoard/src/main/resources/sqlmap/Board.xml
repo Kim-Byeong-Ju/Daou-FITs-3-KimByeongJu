@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="example.servletloginboard.Board">
+
+    <select id="selectAllBoard" resultType="Board">
+        <![CDATA[
+            SELECT board_id as boardId, title, content, user_id as userId
+            FROM BOARD
+            ]]>
+    </select>
+
+    <insert id="insertBoard" parameterType="Board">
+        INSERT INTO BOARD (title, content, user_id)
+        VALUES (#{title}, #{content}, #{userId})
+    </insert>
+    <select id="selectBoardById" parameterType="int" resultType="Board">
+        SELECT board_id as boardId, title, content, user_id as userId
+        FROM BOARD
+        WHERE board_id = #{boardId}
+    </select>
+
+</mapper>
