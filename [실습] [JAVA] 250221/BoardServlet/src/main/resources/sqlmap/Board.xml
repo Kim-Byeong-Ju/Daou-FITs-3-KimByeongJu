@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="example.BoardServlet.Board">
+
+    <select id="selectAllBoard" resultType="Board">
+        <![CDATA[
+        SELECT board_id as boardId, title, content, writer, created_at as createdAt, views, user_id as userId, likecount, commentcount
+        FROM board_view
+        ORDER BY boardId
+        ]]>
+    </select>
+
+    <insert id="insertBoard" parameterType="BoardInsert">
+        INSERT INTO BOARD (title, content, user_id)
+        VALUES (#{title}, #{content}, #{userId})
+    </insert>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM BOARD WHERE BOARD_ID = #{boardId}
+    </delete>
+    <update id="updateBoard" parameterType="map">
+        UPDATE BOARD SET title = #{title} , content = #{content}
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="selectBoardById" parameterType="int" resultType="Board">
+        SELECT board_id as boardId, title, content, writer, created_at as createdAt, views, user_id as userId, likecount, commentcount
+        FROM board_view
+        WHERE board_id = #{boardId}
+        ORDER BY boardId
+    </select>
+
+    <select id="selectBoardByKeyword" parameterType="String" resultType="Board">
+        SELECT board_id as boardId, title, content, writer, created_at as createdAt, views, user_id as userId, likecount, commentcount
+        FROM board_view
+        WHERE title LIKE '%' || CONCAT(#{keyword}, '%') OR content LIKE '%' || CONCAT(#{keyword}, '%')
+        ORDER BY boardId
+    </select>
+
+    <!--  좋아요 기능 -->
+    <select id="selectLikeById" parameterType="map" resultType="String">
+        SELECT user_id
+        FROM board_likes
+        WHERE board_id = #{boardId} AND user_id = #{userId}
+    </select>
+
+    <insert id="insertBoardLike" parameterType="map">
+        INSERT INTO board_likes (board_id, user_id)
+        VALUES (#{boardId}, #{userId})
+    </insert>
+
+    <delete id="deleteBoardLike" parameterType="map">
+        DELETE FROM board_likes
+        WHERE board_id = #{boardId} AND user_id = #{userId}
+    </delete>
+
+
+    <!-- 댓글 기능 -->
+    <select id="getCommentList" parameterType="int" resultType="Comment">
+        SELECT comment_id as commentId, board_id as boardId, user_id as userId, content
+        FROM BOARD_COMMENTS
+        WHERE board_id = #{boardId}
+        ORDER BY commentId
+    </select>
+
+    <insert id="insertComment" parameterType="map">
+        INSERT INTO BOARD_COMMENTS (board_id, user_id, content)
+        VALUES (#{boardId}, #{userId}, #{content})
+    </insert>
+
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM board_comments
+        where comment_id = #{commentId}
+    </delete>
+
+    <update id="updateBoardViews" parameterType="int">
+        UPDATE BOARD SET views = views + 1
+        WHERE board_id = #{boardId}
+    </update>
+</mapper>
